@@ -49,6 +49,7 @@ class NoteDetail(DetailView):
 class NoteCreate(LoginRequiredMixin, CreateView):
     model = Note
     fields = ['title', 'description']
+    success_url = reverse_lazy('notes')
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -57,7 +58,7 @@ class NoteCreate(LoginRequiredMixin, CreateView):
 
 class NoteUpdate(LoginRequiredMixin, UpdateView):
     model = Note
-    fields = ['title', 'description', 'complete']
+    fields = ['title', 'description']
     success_url = reverse_lazy('notes')
 
 
@@ -86,5 +87,5 @@ class RegisterPage(FormView):
 
     def get(self, *args, **kwargs):
         if self.request.user.is_authenticated:
-            return redirect('tasks')
+            return redirect('notes')
         return super(RegisterPage, self).get(*args, **kwargs)
